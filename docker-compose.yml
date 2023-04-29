@@ -1,0 +1,43 @@
+version: '3.3'
+
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: ./docker/api/Dockerfile
+    container_name: webuddy_api
+    restart: unless-stopped
+    command: "python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000"
+    volumes: 
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - 8000:8000
+    ipc: "host"
+
+  nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    container_name: webuddy_nginx
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    depends_on:
+      - api
+
+  database:
+    image: postgres:latest
+    container_name: webuddy_database
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./data/:/var/lib/postgresql/data
+    
+
+    
+
