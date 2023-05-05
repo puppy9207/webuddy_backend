@@ -6,10 +6,7 @@ alembic.ini
 .env
 migrations/
 data/
-<<<<<<< HEAD
 database/
-=======
->>>>>>> 171b6c56b8fa1f78420417806879d2e6da9c8952
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
